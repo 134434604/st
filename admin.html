@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ShroomTherapy Admin Dashboard</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
+</head>
+<body class="bg-gray-50">
+    <div id="app">
+        <!-- Login Form -->
+        <div id="loginForm" class="min-h-screen bg-gradient-to-br from-emerald-50 to-teal-50 flex items-center justify-center px-4">
+            <div class="max-w-md w-full">
+                <div class="bg-white rounded-2xl shadow-xl p-8">
+                    <div class="text-center mb-8">
+                        <div class="bg-emerald-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
+                            <i data-lucide="lock" class="w-8 h-8 text-emerald-600"></i>
+                        </div>
+                        <h1 class="text-2xl font-bold text-gray-900">Admin Login</h1>
+                        <p class="text-gray-600 mt-2">Access ShroomTherapy.com Dashboard</p>
+                    </div>
+
+                    <form id="adminLoginForm" class="space-y-6">
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Username</label>
+                            <div class="relative">
+                                <i data-lucide="user" class="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-400"></i>
+                                <input
+                                    type="text"
+                                    id="username"
+                                    class="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500"
+                                    placeholder="Enter username"
+                                    required
+                                />
+                            </div>
+                        </div>
+
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Password</label>
+                            <div class="relative">
+                                <i data-lucide="lock" class="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-400"></i>
+                                <input
+                                    type="password"
+                                    id="password"
+                                    class="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500"
+                                    placeholder="Enter password"
+                                    required
+                                />
+                            </div>
+                        </div>
+
+                        <div id="errorMessage" class="hidden bg-red-50 border border-red-200 rounded-lg p-3">
+                            <p class="text-red-600 text-sm">Invalid username or password</p>
+                        </div>
+
+                        <button
+                            type="submit"
+                            class="w-full bg-emerald-600 text-white py-3 rounded-lg font-semibold hover:bg-emerald-700 transition-colors"
+                        >
+                            Sign In
+                        </button>
+                    </form>
+
+                    <div class="mt-6 text-center">
+                        <p class="text-sm text-gray-500">
+                            Demo credentials: admin / shroomtherapy2024
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Dashboard -->
+        <div id="dashboard" class="hidden min-h-screen bg-gray-50">
+            <!-- Header -->
+            <div class="bg-white shadow-sm border-b">
+                <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                    <div class="flex justify-between items-center h-16">
+                        <div>
+                            <h1 class="text-2xl font-bold text-gray-900">Admin Dashboard</h1>
+                            <p class="text-sm text-gray-600">ShroomTherapy.com Management</p>
+                        </div>
+                        <div class="flex items-center space-x-4">
+                            <button id="logoutBtn" class="text-gray-600 hover:text-gray-800">
+                                <i data-lucide="log-out" class="w-5 h-5"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+                <div class="flex gap-8">
+                    <!-- Sidebar -->
+                    <div class="w-64 flex-shrink-0">
+                        <div class="bg-white rounded-xl shadow-lg p-6">
+                            <nav class="space-y-2">
+                                <button class="nav-btn w-full flex items-center px-4 py-3 rounded-lg transition-colors bg-emerald-600 text-white" data-tab="overview">
+                                    <i data-lucide="bar-chart-3" class="w-5 h-5 mr-3"></i>
+                                    Overview
+                                </button>
+                                <button class="nav-btn w-full flex items-center px-4 py-3 rounded-lg transition-colors text-gray-700 hover:bg-gray-100" data-tab="products">
+                                    <i data-lucide="package" class="w-5 h-5 mr-3"></i>
+                                    Products
+                                </button>
+                                <button class="nav-btn w-full flex items-center px-4 py-3 rounded-lg transition-colors text-gray-700 hover:bg-gray-100" data-tab="events">
+                                    <i data-lucide="calendar" class="w-5 h-5 mr-3"></i>
+                                    Events
+                                </button>
+                                <button class="nav-btn w-full flex items-center px-4 py-3 rounded-lg transition-colors text-gray-700 hover:bg-gray-100" data-tab="practitioners">
+                                    <i data-lucide="users" class="w-5 h-5 mr-3"></i>
+                                    Practitioners
+                                </button>
+                            </nav>
+                        </div>
+                    </div>
+
+                    <!-- Main Content -->
+                    <div class="flex-1">
+                        <!-- Overview Tab -->
+                        <div id="overview-tab" class="tab-content">
+                            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+                                <div class="bg-white rounded-xl shadow-lg p-6">
+                                    <div class="flex items-center justify-between">
+                                        <div>
+                                            <p class="text-sm text-gray-600">Total Products</p>
+                                            <p class="text-2xl font-bold text-gray-900">156</p>
+                                        </div>
+                                        <div class="text-emerald-600 text-sm font-medium">+12%</div>
+                                    </div>
+                                </div>
+                                <div class="bg-white rounded-xl shadow-lg p-6">
+                                    <div class="flex items-center justify-between">
+                                        <div>
+                                            <p class="text-sm text-gray-600">Active Events</p>
+                                            <p class="text-2xl font-bold text-gray-900">24</p>
+                                        </div>
+                                        <div class="text-blue-600 text-sm font-medium">+8%</div>
+                                    </div>
+                                </div>
+                                <div class="bg-white rounded-xl shadow-lg p-6">
+                                    <div class="flex items-center justify-between">
+                                        <div>
+                                            <p class="text-sm text-gray-600">Practitioners</p>
+                                            <p class="text-2xl font-bold text-gray-900">89</p>
+                                        </div>
+                                        <div class="text-purple-600 text-sm font-medium">+15%</div>
+                                    </div>
+                                </div>
+                                <div class="bg-white rounded-xl shadow-lg p-6">
+                                    <div class="flex items-center justify-between">
+                                        <div>
+                                            <p class="text-sm text-gray-600">Monthly Revenue</p>
+                                            <p class="text-2xl font-bold text-gray-900">$12,450</p>
+                                        </div>
+                                        <div class="text-amber-600 text-sm font-medium">+23%</div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="bg-white rounded-xl shadow-lg p-6">
+                                <h3 class="text-lg font-semibold text-gray-900 mb-4">Quick Actions</h3>
+                                <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                                    <button class="p-4 border-2 border-dashed border-gray-300 rounded-lg hover:border-emerald-500 hover:bg-emerald-50 transition-colors">
+                                        <i data-lucide="upload" class="w-8 h-8 text-gray-400 mx-auto mb-2"></i>
+                                        <p class="text-sm font-medium text-gray-700">Import Products CSV</p>
+                                    </button>
+                                    <button class="p-4 border-2 border-dashed border-gray-300 rounded-lg hover:border-emerald-500 hover:bg-emerald-50 transition-colors">
+                                        <i data-lucide="plus" class="w-8 h-8 text-gray-400 mx-auto mb-2"></i>
+                                        <p class="text-sm font-medium text-gray-700">Add New Event</p>
+                                    </button>
+                                    <button class="p-4 border-2 border-dashed border-gray-300 rounded-lg hover:border-emerald-500 hover:bg-emerald-50 transition-colors">
+                                        <i data-lucide="user-plus" class="w-8 h-8 text-gray-400 mx-auto mb-2"></i>
+                                        <p class="text-sm font-medium text-gray-700">Add Practitioner</p>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Products Tab -->
+                        <div id="products-tab" class="tab-content hidden">
+                            <div class="bg-white rounded-xl shadow-lg p-6">
+                                <div class="flex justify-between items-center mb-6">
+                                    <h3 class="text-lg font-semibold text-gray-900">Product Management</h3>
+                                    <div class="flex space-x-3">
+                                        <button class="bg-gray-600 text-white px-4 py-2 rounded-lg hover:bg-gray-700 transition-colors flex items-center">
+                                            <i data-lucide="upload" class="w-4 h-4 mr-2"></i>
+                                            Import CSV
+                                        </button>
+                                        <button class="bg-emerald-600 text-white px-4 py-2 rounded-lg hover:bg-emerald-700 transition-colors flex items-center">
+                                            <i data-lucide="plus" class="w-4 h-4 mr-2"></i>
+                                            Add Product
+                                        </button>
+                                    </div>
+                                </div>
+                                <p class="text-gray-600 mb-6">Manage your affiliate products, pricing, and descriptions.</p>
+                                
+                                <div class="text-center py-12 text-gray-500">
+                                    <i data-lucide="package" class="w-16 h-16 mx-auto mb-4"></i>
+                                    <p>Product management interface ready for your CSV data</p>
+                                    <p class="text-sm mt-2">Upload your product CSV to get started</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Events Tab -->
+                        <div id="events-tab" class="tab-content hidden">
+                            <div class="bg-white rounded-xl shadow-lg p-6">
+                                <div class="flex justify-between items-center mb-6">
+                                    <h3 class="text-lg font-semibold text-gray-900">Event Management</h3>
+                                    <button class="bg-emerald-600 text-white px-4 py-2 rounded-lg hover:bg-emerald-700 transition-colors flex items-center">
+                                        <i data-lucide="plus" class="w-4 h-4 mr-2"></i>
+                                        Add Event
+                                    </button>
+                                </div>
+                                <p class="text-gray-600 mb-6">Manage workshops, seminars, and certification events.</p>
+                                
+                                <div class="text-center py-12 text-gray-500">
+                                    <i data-lucide="calendar" class="w-16 h-16 mx-auto mb-4"></i>
+                                    <p>Event management interface coming soon...</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Practitioners Tab -->
+                        <div id="practitioners-tab" class="tab-content hidden">
+                            <div class="bg-white rounded-xl shadow-lg p-6">
+                                <div class="flex justify-between items-center mb-6">
+                                    <h3 class="text-lg font-semibold text-gray-900">Practitioner Directory</h3>
+                                    <button class="bg-emerald-600 text-white px-4 py-2 rounded-lg hover:bg-emerald-700 transition-colors flex items-center">
+                                        <i data-lucide="plus" class="w-4 h-4 mr-2"></i>
+                                        Add Practitioner
+                                    </button>
+                                </div>
+                                <p class="text-gray-600 mb-6">Manage certified practitioners and their profiles.</p>
+                                
+                                <div class="text-center py-12 text-gray-500">
+                                    <i data-lucide="users" class="w-16 h-16 mx-auto mb-4"></i>
+                                    <p>Practitioner management interface coming soon...</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Initialize Lucide icons
+        lucide.createIcons();
+
+        // Login functionality
+        document.getElementById('adminLoginForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const username = document.getElementById('username').value;
+            const password = document.getElementById('password').value;
+            const errorMessage = document.getElementById('errorMessage');
+            
+            if (username === 'admin' && password === 'shroomtherapy2024') {
+                document.getElementById('loginForm').classList.add('hidden');
+                document.getElementById('dashboard').classList.remove('hidden');
+                errorMessage.classList.add('hidden');
+            } else {
+                errorMessage.classList.remove('hidden');
+            }
+        });
+
+        // Logout functionality
+        document.getElementById('logoutBtn').addEventListener('click', function() {
+            document.getElementById('loginForm').classList.remove('hidden');
+            document.getElementById('dashboard').classList.add('hidden');
+            document.getElementById('username').value = '';
+            document.getElementById('password').value = '';
+        });
+
+        // Tab navigation
+        document.querySelectorAll('.nav-btn').forEach(button => {
+            button.addEventListener('click', function() {
+                const tabId = this.getAttribute('data-tab');
+                
+                // Hide all tabs
+                document.querySelectorAll('.tab-content').forEach(tab => {
+                    tab.classList.add('hidden');
+                });
+                
+                // Show selected tab
+                document.getElementById(tabId + '-tab').classList.remove('hidden');
+                
+                // Update button styles
+                document.querySelectorAll('.nav-btn').forEach(btn => {
+                    btn.classList.remove('bg-emerald-600', 'text-white');
+                    btn.classList.add('text-gray-700', 'hover:bg-gray-100');
+                });
+                
+                this.classList.add('bg-emerald-600', 'text-white');
+                this.classList.remove('text-gray-700', 'hover:bg-gray-100');
+            });
+        });
+    </script>
+</body>
+</html>
